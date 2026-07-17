@@ -6,33 +6,36 @@ import React, { useState } from "react";
 
 const Login = () => {
   const [account, setAccount] = useState(true);
-  const toogleSignup=()=>{
-      setAccount((prev)=>!prev)
-  }
+  const toogleSignup = () => {
+    setAccount((prev) => !prev);
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-[400px] p-8 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] bg-white text-center">
+      <div className="w-100 p-8 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] bg-white text-center">
         <img className="h-20 mx-auto mb-6" src={logo} alt="Logo" />
-        {account === true ? (
+        {account === true ? 
+        // LOGIN PAGE
+        (
           <div className="flex flex-col gap-5">
             <TextField label="Username" variant="standard" fullWidth />
-
             <TextField
               label="Password"
               type="password"
               variant="standard"
               fullWidth
             />
-
             <Button variant="contained" endIcon={<LogIn size={19} />} fullWidth>
               Login
             </Button>
             <Typography>Or</Typography>
-            <Link component='button' onClick={ toogleSignup} underline="none">
+            <Link component="button" onClick={toogleSignup} underline="none">
               Don't have an account?
             </Link>
+            {/* <Button>help</Button> */}
           </div>
-        ) : (
+        ) :
+        // SIGNUP PAGE
+        (
           <div className="flex flex-col gap-5">
             <TextField label="Full Name" variant="standard" fullWidth />
             <TextField label="Username" variant="standard" fullWidth />
@@ -43,7 +46,6 @@ const Login = () => {
               variant="standard"
               fullWidth
             />
-
             <Button
               variant="contained"
               endIcon={<UserPlus size={19} />}
@@ -52,12 +54,11 @@ const Login = () => {
               Signup
             </Button>
             <Typography>Or</Typography>
-            <Link component='button' onClick={ toogleSignup} underline="none">
+            <Link component="button" onClick={toogleSignup} underline="none">
               Already have an Account
             </Link>
           </div>
         )}
-        
       </div>
     </div>
   );
