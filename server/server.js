@@ -3,6 +3,7 @@ const app= express()
 const PORT =process.env.PORT||8000
 import dotenv from 'dotenv';
 import connectDB from "./config/db.js";
+import router from './routes/route.js';
 
 dotenv.config();
 // Connect database By call
@@ -10,9 +11,7 @@ connectDB();
 
 
 // Route
-app.get('/',(req,res)=>{
-    res.send("<h1>hello</h1>")
-})
+app.get('/',router)
 
 // Listen port
 
