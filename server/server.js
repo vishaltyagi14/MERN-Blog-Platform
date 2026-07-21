@@ -6,7 +6,9 @@ import dotenv from 'dotenv';
 import connectDB from "./config/db.js";
 import router from './routes/route.js';
 
+// Cors
 app.use(cors())
+// Json Support
 app.use(express.json());
 dotenv.config();
 // Connect database By call
@@ -15,10 +17,8 @@ connectDB();
 
 
 
-// Route
-app.get('/', (req, res) => {
-    res.send("hello")
-})
+// Routes
+
 app.use('/api', router)
 
 // Listen port
