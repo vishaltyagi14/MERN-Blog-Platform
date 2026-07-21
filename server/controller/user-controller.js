@@ -2,6 +2,7 @@ import User from "../model/user.js"
 import bcrypt from "bcrypt"
 
 // Signup API
+
 export const signupUser=async(req,res)=>{
     try {
         const {name,password,username}= req.body;
@@ -11,6 +12,7 @@ export const signupUser=async(req,res)=>{
             username,
             password: hashPass
         })
+// Send to Frontend 
 
         return res.status(200).json({
             success: true,

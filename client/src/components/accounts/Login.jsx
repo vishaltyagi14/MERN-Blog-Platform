@@ -5,21 +5,42 @@ import logo from "../../assets/logo_text.png";
 import React, { useState } from "react";
 
 const Login = () => {
-  const initialSignup={
-    name: '',
-    username: '',
-    password:''
-  }
+  const initialSignup = {
+    name: "",
+    username: "",
+    password: "",
+  };
 
   const [account, setAccount] = useState(true);
-  const [signup,setSignup]= useState(initialSignup)
+  const [signup, setSignup] = useState(initialSignup);
   const toogleSignup = () => {
     setAccount((prev) => !prev);
   };
 
   // Handle Input
   const inputChange = (e) => {
-    setSignup({...signup,[e.target.name]:e.target.value});
+    setSignup({ ...signup, [e.target.name]: e.target.value });
+  };
+  const BASE_URL = "http://localhost:8000/api";
+  const signupUserApi = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signup),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Signup Successful");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -74,6 +95,7 @@ const Login = () => {
               variant="contained"
               endIcon={<UserPlus size={19} />}
               fullWidth
+              onClick={() => signupUserApi()}
             >
               Signup
             </Button>
