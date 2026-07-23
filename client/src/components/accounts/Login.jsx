@@ -38,7 +38,7 @@ const Login = () => {
   const signupUserApi = async () => {
     try {
       setLoad(true);
-      console.log(signup);
+      
       const response = await fetch(`${BASE_URL}/signup`, {
         method: "POST",
         headers: {
@@ -49,8 +49,7 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setAlert("success");
-        setResult("Signup completed");
+        toogleSignup()
       } else {
         setAlert("error");
         setResult("Unable to Signup");
