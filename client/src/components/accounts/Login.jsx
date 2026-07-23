@@ -1,4 +1,4 @@
-import { TextField, Box, Button, Typography, Link } from "@mui/material";
+import { TextField, Box, Button, Typography, Link, CircularProgress, Alert } from "@mui/material";
 import { LogIn, UserPlus } from "lucide-react";
 import logo from "../../assets/logo_text.png";
 
@@ -13,6 +13,10 @@ const Login = () => {
 
   const [account, setAccount] = useState(true);
   const [signup, setSignup] = useState(initialSignup);
+  const [load,setLoad]=useState(false)
+  const [alert, setAlert] = useState("")
+  const [result, setResult] = useState("")
+
   const toogleSignup = () => {
     setAccount((prev) => !prev);
   };
@@ -24,6 +28,7 @@ const Login = () => {
   const BASE_URL = "http://localhost:8000/api";
   const signupUserApi = async () => {
     try {
+      setLoad(true)
       const response = await fetch(`${BASE_URL}/signup`, {
         method: "POST",
         headers: {
@@ -34,12 +39,17 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        alert("Signup Successful");
+        setAlert(success)
+        setResult("Signup completed")
       } else {
         alert(data.message);
+        setAlert(error)
+        setResult("Unable to Signup")
       }
     } catch (error) {
       console.error(error);
+    }finally{
+      setLoad(false)
     }
   };
   return (
@@ -93,16 +103,17 @@ const Login = () => {
             />
             <Button
               variant="contained"
-              endIcon={<UserPlus size={19} />}
+              endIcon={load? <CircularProgress enableTrackSlot size="30px" aria-label="Loading…" color="inherit" />:<UserPlus size={19} />}
               fullWidth
               onClick={() => signupUserApi()}
             >
-              Signup
+              {load?  'We are signing you up...':"Signup" }
             </Button>
             <Typography>Or</Typography>
             <Link component="button" onClick={toogleSignup} underline="none">
               Already have an Account
             </Link>
+            <Alert severity={alert}>{result}</Alert>
           </div>
         )}
       </div>

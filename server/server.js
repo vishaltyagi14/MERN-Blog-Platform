@@ -13,10 +13,6 @@ app.use(express.json());
 dotenv.config();
 // Connect database By call
 connectDB();
-//  Success return 
-
-
-
 // Routes
 
 app.use('/api', router)
