@@ -1,4 +1,12 @@
-import { TextField, Box, Button, Typography, Link, CircularProgress, Alert } from "@mui/material";
+import {
+  TextField,
+  Box,
+  Button,
+  Typography,
+  Link,
+  CircularProgress,
+  Alert,
+} from "@mui/material";
 import { LogIn, UserPlus } from "lucide-react";
 import logo from "../../assets/logo_text.png";
 
@@ -13,9 +21,9 @@ const Login = () => {
 
   const [account, setAccount] = useState(true);
   const [signup, setSignup] = useState(initialSignup);
-  const [load,setLoad]=useState(false)
-  const [alertmsg, setAlert] = useState("")
-  const [result, setResult] = useState("")
+  const [load, setLoad] = useState(false);
+  const [alertmsg, setAlert] = useState("");
+  const [result, setResult] = useState("");
 
   const toogleSignup = () => {
     setAccount((prev) => !prev);
@@ -23,12 +31,13 @@ const Login = () => {
 
   // Handle Input
   const inputChange = (e) => {
+
     setSignup({ ...signup, [e.target.name]: e.target.value });
   };
   const BASE_URL = "http://localhost:8000/api";
   const signupUserApi = async () => {
     try {
-      setLoad(true)
+      setLoad(true);
       console.log(signup);
       const response = await fetch(`${BASE_URL}/signup`, {
         method: "POST",
@@ -40,17 +49,16 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setAlert("success")
-        setResult("Signup completed")
+        setAlert("success");
+        setResult("Signup completed");
       } else {
-        
-        setAlert("error")
-        setResult("Unable to Signup")
+        setAlert("error");
+        setResult("Unable to Signup");
       }
     } catch (error) {
       console.error(error);
-    }finally{
-      setLoad(false)
+    } finally {
+      setLoad(false);
     }
   };
   return (
@@ -81,35 +89,50 @@ const Login = () => {
           <div className="flex flex-col gap-5">
             <TextField
               label="Full Name"
-              onChange={(e) => inputChange(e)}
+              name="name"
+              value={signup.name}
+              onChange={inputChange}
               variant="standard"
               fullWidth
-              name="name"
             />
+
             <TextField
               label="Username"
-              onChange={(e) => inputChange(e)}
+              name="username"
+              value={signup.username}
+              onChange={inputChange}
               variant="standard"
               fullWidth
-              name="username"
             />
 
             <TextField
               label="Password"
               type="password"
+              name="password"
+              value={signup.password}
+              onChange={inputChange}
               variant="standard"
               fullWidth
-              onChange={(e) => inputChange(e)}
-              name="password"
             />
             <Button
-            disabled={load}
+              disabled={load}
               variant="contained"
-              endIcon={load? <CircularProgress enableTrackSlot size="30px" aria-label="Loading…" color="inherit" />:<UserPlus size={19} />}
+              endIcon={
+                load ? (
+                  <CircularProgress
+                    enableTrackSlot
+                    size="30px"
+                    aria-label="Loading…"
+                    color="inherit"
+                  />
+                ) : (
+                  <UserPlus size={19} />
+                )
+              }
               fullWidth
               onClick={() => signupUserApi()}
             >
-              {load?  'We are signing you up...':"Signup" }
+              {load ? "We are signing you up..." : "Signup"}
             </Button>
             <Typography>Or</Typography>
             <Link component="button" onClick={toogleSignup} underline="none">
