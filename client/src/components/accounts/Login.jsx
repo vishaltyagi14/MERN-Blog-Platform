@@ -14,7 +14,7 @@ const Login = () => {
   const [account, setAccount] = useState(true);
   const [signup, setSignup] = useState(initialSignup);
   const [load,setLoad]=useState(false)
-  const [alert, setAlert] = useState("")
+  const [alertmsg, setAlert] = useState("")
   const [result, setResult] = useState("")
 
   const toogleSignup = () => {
@@ -29,6 +29,7 @@ const Login = () => {
   const signupUserApi = async () => {
     try {
       setLoad(true)
+      console.log(signup);
       const response = await fetch(`${BASE_URL}/signup`, {
         method: "POST",
         headers: {
@@ -39,11 +40,11 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setAlert(success)
+        setAlert("success")
         setResult("Signup completed")
       } else {
-        alert(data.message);
-        setAlert(error)
+        
+        setAlert("error")
         setResult("Unable to Signup")
       }
     } catch (error) {
@@ -102,6 +103,7 @@ const Login = () => {
               name="password"
             />
             <Button
+            disabled={load}
               variant="contained"
               endIcon={load? <CircularProgress enableTrackSlot size="30px" aria-label="Loading…" color="inherit" />:<UserPlus size={19} />}
               fullWidth
@@ -113,7 +115,7 @@ const Login = () => {
             <Link component="button" onClick={toogleSignup} underline="none">
               Already have an Account
             </Link>
-            <Alert severity={alert}>{result}</Alert>
+            <Alert severity={alertmsg}>{result}</Alert>
           </div>
         )}
       </div>
