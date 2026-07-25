@@ -19,8 +19,14 @@ const Login = () => {
     password: "",
   };
 
+  const initialLogin={
+    username: '',
+    password: ''
+  }
+
   const [account, setAccount] = useState(true);
   const [signup, setSignup] = useState(initialSignup);
+  const [login, setLogin] = useState(initialLogin);
   const [load, setLoad] = useState(false);
   const [alertmsg, setAlert] = useState("");
   const [result, setResult] = useState("");
@@ -31,9 +37,12 @@ const Login = () => {
 
   // Handle Input
   const inputChange = (e) => {
-
     setSignup({ ...signup, [e.target.name]: e.target.value });
   };
+
+  const valueChange =(e)=>{
+    setLogin({...login,[e.target.name]:e.target.value})
+  }
   const BASE_URL = "http://localhost:8000/api";
   const signupUserApi = async () => {
     try {
