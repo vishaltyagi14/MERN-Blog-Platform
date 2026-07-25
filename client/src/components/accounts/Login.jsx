@@ -30,6 +30,7 @@ const Login = () => {
   const [load, setLoad] = useState(false);
   const [alertmsg, setAlert] = useState("");
   const [result, setResult] = useState("");
+  const [loginResult, setLKoginResult] = useState("");
 
   const toogleSignup = () => {
     setAccount((prev) => !prev);
@@ -84,7 +85,7 @@ const Login = () => {
         toogleSignup();
       } else {
         setAlert("error");
-        setResult("Unable to Signup");
+        setLKoginResult("Unable to Login. Something went Wrong");
       }
     } catch (error) {
       console.error(error);
@@ -119,7 +120,7 @@ const Login = () => {
             <Button
               disabled={load}
               variant="contained"
-              onClick={()=> loginUserApi}
+              onClick={()=> loginUserApi()}
               endIcon={
                 load ? (
                   <CircularProgress
@@ -140,7 +141,7 @@ const Login = () => {
             <Link component="button" onClick={toogleSignup} underline="none">
               Don't have an account?
             </Link>
-            <Alert severity={alertmsg}>{result}</Alert>
+            <Alert severity={alertmsg}>{loginResult}</Alert>
           </div>
         ) : (
           // SIGNUP PAGE

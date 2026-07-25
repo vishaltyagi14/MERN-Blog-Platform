@@ -28,3 +28,8 @@ export const signupUser=async(req,res)=>{
         })
     }
 }
+
+export const loginUser= async(req,res)=>{
+    let {username,password}= req.body
+    let user
+}
