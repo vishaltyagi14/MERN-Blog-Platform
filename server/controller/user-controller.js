@@ -1,6 +1,6 @@
 import User from "../model/user.js"
 import bcrypt from "bcrypt"
-
+import Token from "../model/token.js"
 // Signup API
 
 export const signupUser = async (req, res) => {
@@ -43,8 +43,11 @@ export const loginUser = async (req, res) => {
     try {
         let match = await bcrypt.compare(password, user.password)
         if (match) {
-            const accessToken= jwt.sign(user.json(),process.env.ACCESS_TOKEN_KEY)
-            const refreshToken
+            const accessToken= jwt.sign(user.json(),process.env.ACCESS_TOKEN_KEY,{expiresIn:'15m'})
+            const refreshToken= jwt.sign(user.json(),process.env.REFRESH_TOKEN_KEY)
+
+            const newToken= new Token({token: refreshToken})
+            await newToken.save();
         } else {
             return res.status(400).json({
                 success: "false",
