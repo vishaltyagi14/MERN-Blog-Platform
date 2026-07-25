@@ -19,10 +19,10 @@ const Login = () => {
     password: "",
   };
 
-  const initialLogin={
-    username: '',
-    password: ''
-  }
+  const initialLogin = {
+    username: "",
+    password: "",
+  };
 
   const [account, setAccount] = useState(true);
   const [signup, setSignup] = useState(initialSignup);
@@ -40,14 +40,14 @@ const Login = () => {
     setSignup({ ...signup, [e.target.name]: e.target.value });
   };
 
-  const valueChange =(e)=>{
-    setLogin({...login,[e.target.name]:e.target.value})
-  }
+  const valueChange = (e) => {
+    setLogin({ ...login, [e.target.name]: e.target.value });
+  };
   const BASE_URL = "http://localhost:8000/api";
   const signupUserApi = async () => {
     try {
       setLoad(true);
-      
+
       const response = await fetch(`${BASE_URL}/signup`, {
         method: "POST",
         headers: {
@@ -58,7 +58,30 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        toogleSignup()
+        toogleSignup();
+      } else {
+        setAlert("error");
+        setResult("Unable to Signup");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoad(false);
+    }
+  };
+  const loginUserApi = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/login`, {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify(login),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        toogleSignup();
       } else {
         setAlert("error");
         setResult("Unable to Signup");
@@ -76,21 +99,48 @@ const Login = () => {
         {account === true ? (
           // LOGIN PAGE
           <div className="flex flex-col gap-5">
-            <TextField label="Username" variant="standard" fullWidth />
             <TextField
-              label="Password"
-              type="password"
+              label="Username"
+              value={login.username}
+              onChange={valueChange}
+              name="username"
               variant="standard"
               fullWidth
             />
-            <Button variant="contained" endIcon={<LogIn size={19} />} fullWidth>
+            <TextField
+              label="Password"
+              name="password"
+              type="password"
+              variant="standard"
+              fullWidth
+              onChange={valueChange}
+              value={login.password}
+            />
+            <Button
+              disabled={load}
+              variant="contained"
+              onClick={()=> loginUserApi}
+              endIcon={
+                load ? (
+                  <CircularProgress
+                    enableTrackSlot
+                    size="30px"
+                    aria-label="Loading…"
+                    color="inherit"
+                  />
+                ) : (
+                  <LogIn size={19}/>
+                )
+              }
+              fullWidth
+            >
               Login
             </Button>
             <Typography>Or</Typography>
             <Link component="button" onClick={toogleSignup} underline="none">
               Don't have an account?
             </Link>
-            {/* <Button>help</Button> */}
+            <Alert severity={alertmsg}>{result}</Alert>
           </div>
         ) : (
           // SIGNUP PAGE
