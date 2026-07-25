@@ -30,7 +30,7 @@ const Login = () => {
   const [load, setLoad] = useState(false);
   const [alertmsg, setAlert] = useState("");
   const [result, setResult] = useState("");
-  const [loginResult, setLKoginResult] = useState("");
+  const [loginResult, setLoginResult] = useState("");
 
   const toogleSignup = () => {
     setAccount((prev) => !prev);
@@ -62,7 +62,7 @@ const Login = () => {
         toogleSignup();
       } else {
         setAlert("error");
-        setResult("Unable to Signup");
+        setResult(data.message);
       }
     } catch (error) {
       console.error(error);
@@ -72,6 +72,7 @@ const Login = () => {
   };
   const loginUserApi = async () => {
     try {
+      setLoad(true);
       const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: {
@@ -82,10 +83,11 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        toogleSignup();
+        setAlert('success')
+        setLoginResult(data.message);
       } else {
         setAlert("error");
-        setLKoginResult("Unable to Login. Something went Wrong");
+        setLoginResult(data.message);
       }
     } catch (error) {
       console.error(error);

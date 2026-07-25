@@ -1,6 +1,7 @@
 import User from "../model/user.js"
 import bcrypt from "bcrypt"
 import Token from "../model/token.js"
+import jwt from "jsonwebtoken"
 // Signup API
 
 export const signupUser = async (req, res) => {
@@ -37,21 +38,30 @@ export const loginUser = async (req, res) => {
     if (!user) {
         return res.status(400).json({
             success: "false",
-            message: "Username doesn't match"
+            message: "Username or Password is wrong"
         })
     }
     try {
         let match = await bcrypt.compare(password, user.password)
         if (match) {
-            const accessToken= jwt.sign(user.json(),process.env.ACCESS_TOKEN_KEY,{expiresIn:'15m'})
-            const refreshToken= jwt.sign(user.json(),process.env.REFRESH_TOKEN_KEY)
+            const accessToken= jwt.sign(user.toJSON(),process.env.ACCESS_TOKEN_KEY,{expiresIn:'15m'})
+            const refreshToken= jwt.sign(user.toJSON(),process.env.REFRESH_TOKEN_KEY)
 
             const newToken= new Token({token: refreshToken})
             await newToken.save();
+
+             return res.status(200).json({
+                success: "true",
+                message: "Login Successfull",
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+                name: user.name,
+                username: user.username
+            })
         } else {
             return res.status(400).json({
                 success: "false",
-                message: "username or password is wrong"
+                message: "Username or Password is wrong"
             })
         }
     } catch (error) {
