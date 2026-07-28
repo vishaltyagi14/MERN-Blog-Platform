@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 import { LogIn, UserPlus } from "lucide-react";
 import logo from "../../assets/logo_text.png";
-import { createContext, useContext } from "react";
-import ContextProvider from "../../context/Context";
+import { useContext } from "react";
+
+import { OnlyContext } from "../../context/Context";
 
 import React, { useState } from "react";
 
@@ -33,7 +34,7 @@ const Login = () => {
   const [alertmsg, setAlert] = useState("");
   const [result, setResult] = useState("");
   const [loginResult, setLoginResult] = useState("");
-  const [setAccount] = useContext(createContext);
+  const [setAccountDetails] = useContext(OnlyContext);
 
   const toogleSignup = () => {
     setAccount((prev) => !prev);
@@ -79,7 +80,7 @@ const Login = () => {
       const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: {
-          "content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(login),
       });
@@ -89,7 +90,7 @@ const Login = () => {
         sessionStorage.setItem("accesToken", `Bearer ${data.accessToken}`);
         sessionStorage.setItem("refreshToken", `Bearer ${data.refreshToken}`);
 
-        setAccount({username: data.username, name: data.name})
+        setAccountDetails({ username: data.username, name: data.name });
         setAlert("success");
         setLoginResult(data.message);
       } else {
@@ -150,7 +151,7 @@ const Login = () => {
             <Link component="button" onClick={toogleSignup} underline="none">
               Don't have an account?
             </Link>
-            <Alert severity={alertmsg}>{loginResult}</Alert>
+            {loginResult && <Alert severity={alertmsg}>{loginResult}</Alert>}
           </div>
         ) : (
           // SIGNUP PAGE
@@ -206,7 +207,7 @@ const Login = () => {
             <Link component="button" onClick={toogleSignup} underline="none">
               Already have an Account
             </Link>
-            <Alert severity={alertmsg}>{result}</Alert>
+            {result && <Alert severity={alertmsg}>{result}</Alert>}
           </div>
         )}
       </div>
