@@ -83,6 +83,8 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
+        sessionStorage.setItem('accesToken',`Bearer ${data.accessToken}`)
+        sessionStorage.setItem('refreshToken',`Bearer ${data.refreshToken}`)
         setAlert('success')
         setLoginResult(data.message);
       } else {
