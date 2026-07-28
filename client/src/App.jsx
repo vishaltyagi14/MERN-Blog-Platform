@@ -8,7 +8,9 @@ import {Box} from '@mui/material';
 const App = () => {
   return (
     <>
-    <Login/>
+    <ContextProvider>
+      <Login/>
+    </ContextProvider>
     </>
   )
 }

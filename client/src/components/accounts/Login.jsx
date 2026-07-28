@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import { LogIn, UserPlus } from "lucide-react";
 import logo from "../../assets/logo_text.png";
+import { createContext, useContext } from "react";
+import ContextProvider from "../../context/Context";
 
 import React, { useState } from "react";
 
@@ -31,6 +33,7 @@ const Login = () => {
   const [alertmsg, setAlert] = useState("");
   const [result, setResult] = useState("");
   const [loginResult, setLoginResult] = useState("");
+  const [setAccount] = useContext(createContext);
 
   const toogleSignup = () => {
     setAccount((prev) => !prev);
@@ -83,9 +86,11 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        sessionStorage.setItem('accesToken',`Bearer ${data.accessToken}`)
-        sessionStorage.setItem('refreshToken',`Bearer ${data.refreshToken}`)
-        setAlert('success')
+        sessionStorage.setItem("accesToken", `Bearer ${data.accessToken}`);
+        sessionStorage.setItem("refreshToken", `Bearer ${data.refreshToken}`);
+
+        setAccount({username: data.username, name: data.name})
+        setAlert("success");
         setLoginResult(data.message);
       } else {
         setAlert("error");
@@ -124,7 +129,7 @@ const Login = () => {
             <Button
               disabled={load}
               variant="contained"
-              onClick={()=> loginUserApi()}
+              onClick={() => loginUserApi()}
               endIcon={
                 load ? (
                   <CircularProgress
@@ -134,7 +139,7 @@ const Login = () => {
                     color="inherit"
                   />
                 ) : (
-                  <LogIn size={19}/>
+                  <LogIn size={19} />
                 )
               }
               fullWidth
