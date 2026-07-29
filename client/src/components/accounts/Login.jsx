@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { OnlyContext } from "../../context/Context";
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const initialSignup = {
@@ -35,7 +36,8 @@ const Login = () => {
   const [result, setResult] = useState("");
   const [loginResult, setLoginResult] = useState("");
   const { setAccountDetails } = useContext(OnlyContext);
-
+  const navigate=useNavigate()
+  
   const toogleSignup = () => {
     setAccount((prev) => !prev);
   };
