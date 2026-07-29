@@ -34,7 +34,7 @@ const Login = () => {
   const [alertmsg, setAlert] = useState("");
   const [result, setResult] = useState("");
   const [loginResult, setLoginResult] = useState("");
-  const [setAccountDetails] = useContext(OnlyContext);
+  const { setAccountDetails } = useContext(OnlyContext);
 
   const toogleSignup = () => {
     setAccount((prev) => !prev);
