@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Login from "./components/accounts/login";
 import { Box } from "@mui/material";
 import ContextProvider from "./context/Context";
@@ -7,13 +7,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/header/header";
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   return (
     <>
       <ContextProvider>
         <BrowserRouter>
         <Header/>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated}/>} />
             <Route path="/" element={<Home />} />
           </Routes>
         </BrowserRouter>

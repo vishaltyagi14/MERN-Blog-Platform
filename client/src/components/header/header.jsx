@@ -4,12 +4,17 @@ import { Link } from "react-router-dom";
 
 const Component = styled(AppBar)`
   background-color: white;
+  justify-content: center;
+  height: 60px;
 `;
 const Container = styled(Box)`
+    display: flex;
     justify-content: center;
+    align-items: center;
+    gap:20px;
     &> a{
       color: #000;
-      padding: 20px
+      padding: 25px
       text-decoration: none;
 }
 `;
