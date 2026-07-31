@@ -1,27 +1,43 @@
 import React, { useState } from "react";
 import Login from "./components/accounts/login";
-import { Box } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import ContextProvider from "./context/Context";
 import Home from "./components/home/home";
-import { BrowserRouter, Routes, Route, Outlet ,Navigate} from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
 import Header from "./components/header/header";
 
-const Privateroute=({isAuthenticated,...props})=>{
-  return isAuthenticated?<>
-  <Outlet/>
-  </>:
-  <Navigate replace to='/login'/>
-}
+const PrivateRoute = () => {
+  const token = sessionStorage.getItem("accessToken");
+
+
+  return token ? (
+    <>
+      <Header />
+      <Toolbar />
+      <Outlet />
+    </>
+  ) : (
+    <Navigate to="/login" replace />
+  );
+};
+
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   return (
     <>
       <ContextProvider>
         <BrowserRouter>
-        <Header/>
           <Routes>
-            <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated}/>} />
-            <Route path="/" element={<Privateroute isAuthenticated={isAuthenticated}/>}>
+            <Route
+              path="/login"
+              element={<Login />}
+            />
+            <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
             </Route>
           </Routes>

@@ -16,7 +16,7 @@ import { OnlyContext } from "../../context/Context";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = (setIsAuthenticated) => {
+const Login = () => {
   const initialSignup = {
     name: "",
     username: "",
@@ -91,12 +91,10 @@ const Login = (setIsAuthenticated) => {
       if (response.ok) {
         sessionStorage.setItem("accessToken", `Bearer ${data.accessToken}`);
         sessionStorage.setItem("refreshToken", `Bearer ${data.refreshToken}`);
-        
-        setIsAuthenticated(true)
 
         setAccountDetails({ username: data.username, name: data.name });
         setAlert("success");
-        setLoginResult(data.message);
+        navigate('/')
       } else {
         setAlert("error");
         setLoginResult(data.message);

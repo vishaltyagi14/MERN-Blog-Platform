@@ -21,6 +21,7 @@ const Container = styled(Box)`
 
 const handleLogout=()=>{
   sessionStorage.removeItem("accessToken")
+  sessionStorage.removeItem("refreshToken");
 }
 const Header = () => {
   return (
