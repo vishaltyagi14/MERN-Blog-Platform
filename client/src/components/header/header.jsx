@@ -18,6 +18,10 @@ const Container = styled(Box)`
       text-decoration: none;
 }
 `;
+
+const handleLogout=()=>{
+  sessionStorage.removeItem("accessToken")
+}
 const Header = () => {
   return (
     <Component>
@@ -25,7 +29,7 @@ const Header = () => {
         <Link to="/">HOME</Link>
         <Link to="/about">ABOUT</Link>
         <Link to="/contact">CONTACT</Link>
-        <Link to="/login">LOGOUT</Link>
+        <Link onClick ={handleLogout} to="/login">LOGOUT</Link>
       </Container>
     </Component>
   );

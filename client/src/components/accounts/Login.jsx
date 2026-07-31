@@ -16,7 +16,7 @@ import { OnlyContext } from "../../context/Context";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = (isAuthenticated) => {
+const Login = (setIsAuthenticated) => {
   const initialSignup = {
     name: "",
     username: "",
@@ -89,7 +89,7 @@ const Login = (isAuthenticated) => {
 
       const data = await response.json();
       if (response.ok) {
-        sessionStorage.setItem("accesToken", `Bearer ${data.accessToken}`);
+        sessionStorage.setItem("accessToken", `Bearer ${data.accessToken}`);
         sessionStorage.setItem("refreshToken", `Bearer ${data.refreshToken}`);
         
         setIsAuthenticated(true)
