@@ -53,22 +53,29 @@ const initialPost = {
 const CreatePost = () => {
   const [post, setPost] = useState(initialPost);
   const [file, setFile] = useState("");
-  const location= useLocation()
-  const account=useContext(OnlyContext)
+  const location = useLocation();
+  const account = useContext(OnlyContext);
+
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    const getImage=async()=>{
-      const data= new FormData();
-      data.append("name",file.name);
-      data.append("file",file)
+    const getImage = async () => {
+      const data = new FormData();
+      data.append("name", file.name);
+      data.append("file", file);
 
       // API CALL
-      const response=await fetch('')
-      post.picture=''
-    }
-    getImage()
-    post.categories= location.search?.split('=')[1]||"All"
-    post.username= account.username
+      const response = await fetch(`${BASE_URL}/file/upload`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+
+      const resData = await response.json();
+      post.picture = "";
+    };
+    getImage();
+    post.categories = location.search?.split("=")[1] || "All";
+    post.username = account.username;
   }, [file]);
 
   const handleChange = (e) => {
@@ -78,7 +85,11 @@ const CreatePost = () => {
     <>
       <Container>
         <Image
-          src="https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
+          src={
+            post.picture
+              ? post.picture
+              : "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
+          }
           alt="banner"
           title="Banner Image"
         />
