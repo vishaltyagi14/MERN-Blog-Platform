@@ -50,7 +50,12 @@ const Login = () => {
   const valueChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
   };
-  const BASE_URL = "http://localhost:8000/api";
+  
+  
+  const BASE_URL = import.meta.env.VITE_API_URL
+
+
+
   const signupUserApi = async () => {
     try {
       setLoad(true);

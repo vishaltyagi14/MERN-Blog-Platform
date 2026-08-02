@@ -9,7 +9,7 @@ import {
   styled,
 } from "@mui/material";
 import { category } from "../../constants/Category";
-import {Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom";
 
 const StyledTable = styled(Table)`
   border: 1px solid rgba(224, 224, 224, 1);
@@ -22,21 +22,27 @@ const StyledButton = styled(Button)`
 `;
 
 const Categories = () => {
+  const [searchParam]= useSearchParams();
+  const selectedCategory=searchParam.get('category')
   return (
     <>
-      <Link to ='/create'>
+      <Link to={`/create?category=${selectedCategory || ""}`}>
         <StyledButton>Create Post</StyledButton>
       </Link>
       <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell>All Categories</TableCell>
+            <Link to='/'>
+              <TableCell>All Categories</TableCell>
+            </Link>
           </TableRow>
         </TableHead>
         <TableBody>
           {category.map((c) => (
             <TableRow key={c.id}>
-              <TableCell>{c.type}</TableCell>
+              <Link to={`/?category=${c.type}`}>
+                <TableCell>{c.type}</TableCell>
+              </Link>
             </TableRow>
           ))}
         </TableBody>

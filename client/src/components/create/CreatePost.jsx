@@ -6,9 +6,12 @@ import {
   Button,
   TextareaAutosize,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { ImageUp } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { OnlyContext } from "../../context/Context";
 
 const Image = styled("img")`
   height: 50vh;
@@ -49,9 +52,27 @@ const initialPost = {
 
 const CreatePost = () => {
   const [post, setPost] = useState(initialPost);
+  const [file, setFile] = useState("");
+  const location= useLocation()
+  const account=useContext(OnlyContext)
+
+  useEffect(() => {
+    const getImage=async()=>{
+      const data= new FormData();
+      data.append("name",file.name);
+      data.append("file",file)
+
+      // API CALL
+      const response=await fetch('')
+      post.picture=''
+    }
+    getImage()
+    post.categories= location.search?.split('=')[1]||"All"
+    post.username= account.username
+  }, [file]);
 
   const handleChange = (e) => {
-    setPost({...post,[e.target.name]: e.target.value})
+    setPost({ ...post, [e.target.name]: e.target.value });
   };
   return (
     <>
@@ -67,10 +88,19 @@ const CreatePost = () => {
             <ImageUp color="#363636" size={25}></ImageUp>
           </label>
           <input type="file" id="upload_image" style={{ display: "none" }} />
-          <StyledInputBase placeholder="Title" name="title" onChange={handleChange}/>
+          <StyledInputBase
+            placeholder="Title"
+            name="title"
+            onChange={handleChange}
+          />
           <Button variant="contained">Publish</Button>
         </StyledFormControl>
-        <StyledTextareaAutosize onChange={handleChange} name="description" placeholder="Whats Up!..." minRows={5} />
+        <StyledTextareaAutosize
+          onChange={handleChange}
+          name="description"
+          placeholder="Whats Up!..."
+          minRows={5}
+        />
       </Container>
     </>
   );
