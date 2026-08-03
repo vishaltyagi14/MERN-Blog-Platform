@@ -1,9 +1,3 @@
-import React from 'react'
+export const uploadImage =(req,res)=>{
 
-const image_controller = () => {
-  return (
-    <div>image-controller</div>
-  )
 }
-
-export default image_controller
