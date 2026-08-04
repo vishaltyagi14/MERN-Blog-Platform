@@ -91,7 +91,7 @@ const CreatePost = () => {
     const response= await fetch(`${BASE_URL}/create`,{
       method:"POST",
       headers: {
-        authorization: getAccessToken
+        authorization: getAccessToken()
       },
       body: post
     })

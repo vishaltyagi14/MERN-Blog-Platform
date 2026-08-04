@@ -8,7 +8,7 @@ const router = express.Router()
 router.post("/signup",signupUser)
 router.post("/login",loginUser)
 router.post("/file/upload",upload.single('file'),uploadImage)
-router.post('/create',createPost)
+router.post('/create',authenticateToken,createPost)
 
 
 export default router
