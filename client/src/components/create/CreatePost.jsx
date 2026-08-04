@@ -12,6 +12,7 @@ import { ImageUp } from "lucide-react";
 import { useLocation ,useNavigate} from "react-router-dom";
 import { useContext } from "react";
 import { OnlyContext } from "../../context/Context";
+import { getAccessToken } from "../../utils/common-utils";
 
 const Image = styled("img")`
   height: 50vh;
@@ -89,13 +90,16 @@ const CreatePost = () => {
   const savePost=async()=>{
     const response= await fetch(`${BASE_URL}/create`,{
       method:"POST",
+      headers: {
+        authorization: getAccessToken
+      },
       body: post
     })
     const data = await response.json();
     if(response.ok){
       navigate('/')
     }else{
-      
+
     }
   }
   return (
