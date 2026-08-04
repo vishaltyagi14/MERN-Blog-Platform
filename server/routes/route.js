@@ -3,6 +3,7 @@ import { signupUser,loginUser } from "../controller/user-controller.js"
 import {uploadImage} from "../controller/image-controller.js"
 import { createPost } from "../controller/post-controller.js"
 import {upload} from '../utils/upload.js'
+import { authenticateToken } from "../controller/jwt-controller.js"
 const router = express.Router()
 
 router.post("/signup",signupUser)
