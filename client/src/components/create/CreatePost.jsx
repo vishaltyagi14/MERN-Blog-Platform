@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { ImageUp } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useLocation ,useNavigate} from "react-router-dom";
 import { useContext } from "react";
 import { OnlyContext } from "../../context/Context";
 
@@ -52,8 +52,9 @@ const initialPost = {
 
 const CreatePost = () => {
   const [post, setPost] = useState(initialPost);
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const location = useLocation();
+  const navigate= useNavigate()
   const account = useContext(OnlyContext);
 
   const BASE_URL = import.meta.env.VITE_API_URL;
@@ -67,7 +68,7 @@ const CreatePost = () => {
       // API CALL
       const response = await fetch(`${BASE_URL}/file/upload`, {
         method: "POST",
-        body: JSON.stringify(data),
+        body: data,
       });
 
       const resData = await response.json();
@@ -78,9 +79,25 @@ const CreatePost = () => {
     post.username = account.username;
   }, [file]);
 
+  const handleFilechange=(e)=>{
+    setFile(e.target.files[0])
+  }
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
+
+  const savePost=async()=>{
+    const response= await fetch(`${BASE_URL}/create`,{
+      method:"POST",
+      body: post
+    })
+    const data = await response.json();
+    if(response.ok){
+      navigate('/')
+    }else{
+      
+    }
+  }
   return (
     <>
       <Container>
@@ -98,13 +115,13 @@ const CreatePost = () => {
           <label htmlFor="upload_image" className="mt-1.5 ml-2">
             <ImageUp color="#363636" size={25}></ImageUp>
           </label>
-          <input type="file" id="upload_image" style={{ display: "none" }} />
+          <input type="file" id="upload_image" onChange={handleFilechange} style={{ display: "none" }} />
           <StyledInputBase
             placeholder="Title"
             name="title"
             onChange={handleChange}
           />
-          <Button variant="contained">Publish</Button>
+          <Button variant="contained" onClick={savePost}>Publish</Button>
         </StyledFormControl>
         <StyledTextareaAutosize
           onChange={handleChange}

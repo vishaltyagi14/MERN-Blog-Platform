@@ -1,27 +1,24 @@
-import express from 'express'
-import cors from "cors"
-const app = express()
-const PORT = process.env.PORT || 8000
-import dotenv from 'dotenv';
+import "dotenv/config";
+
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+
 import connectDB from "./config/db.js";
-import router from './routes/route.js';
-import bodyParser from 'body-parser';
+import router from "./routes/route.js";
 
-// Cors
-app.use(cors())
-// Json Support
+const app = express();
+
+const PORT = process.env.PORT || 8000;
+
+app.use(cors());
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json({extended: true}))
-dotenv.config();
-// Connect database By call
+app.use(bodyParser.urlencoded({ extended: true }));
+
 connectDB();
-// Routes
 
-app.use('/api', router)
-
-// Listen port
+app.use("/api", router);
 
 app.listen(PORT, () => {
-    console.log(`Server is running http://localhost:${PORT}`)
-})
+    console.log(`Server is running http://localhost:${PORT}`);
+});
