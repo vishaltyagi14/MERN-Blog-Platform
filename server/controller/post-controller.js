@@ -18,4 +18,15 @@ export const createPost = async (req, res) => {
             msg: error.message || "Failed to create post"
         })
     }
+} 
+
+export const getAllPosts=async(req,res)=>{
+    try {
+        const posts= await Post.find({})
+        return res.status(200).json(posts)
+    } catch (error) {
+        return response.status(500).json({
+            msg: error.message
+        })
+    }
 }
