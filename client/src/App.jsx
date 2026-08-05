@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import Header from "./components/header/header";
 import CreatePost from "./components/create/CreatePost";
+import DetailView from "./details/DetailView";
 
 const PrivateRoute = () => {
   const token = sessionStorage.getItem("accessToken");
@@ -41,6 +42,7 @@ const App = () => {
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
               <Route path="/create" element={<CreatePost />} />
+              <Route path="/details/:id" element={<DetailView />} />
             </Route>
           </Routes>
         </BrowserRouter>
