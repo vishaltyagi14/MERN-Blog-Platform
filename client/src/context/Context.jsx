@@ -3,7 +3,8 @@ import React, { useState } from "react";
 export const OnlyContext= React.createContext();
  const ContextProvider=({children})=>{
     const [accountDetails, setAccountDetails] = useState({
-        username: '',name: ''
+        username: sessionStorage.getItem('username') || '',
+        name: sessionStorage.getItem('name') || ''
     })
     return <OnlyContext.Provider value={{
         accountDetails,setAccountDetails

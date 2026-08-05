@@ -97,6 +97,9 @@ const Login = () => {
         sessionStorage.setItem("accessToken", `Bearer ${data.accessToken}`);
         sessionStorage.setItem("refreshToken", `Bearer ${data.refreshToken}`);
 
+        sessionStorage.setItem("username", data.username);
+        sessionStorage.setItem("name", data.name);
+
         setAccountDetails({ username: data.username, name: data.name });
         setAlert("success");
         navigate('/')

@@ -11,7 +11,7 @@ const postSchema=mongoose.Schema({
     },
     picture:{
         type: String,
-        required: true
+        
     },
     username:{
         type: String,

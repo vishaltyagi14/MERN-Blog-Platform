@@ -56,11 +56,12 @@ const CreatePost = () => {
   const [file, setFile] = useState(null);
   const location = useLocation();
   const navigate= useNavigate()
-  const account = useContext(OnlyContext);
+  const { accountDetails,setAccountDetails } = useContext(OnlyContext);
 
   const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
+    if (!file) return;
     const getImage = async () => {
       const data = new FormData();
       data.append("name", file.name);
@@ -73,33 +74,55 @@ const CreatePost = () => {
       });
 
       const resData = await response.json();
-      post.picture = "";
+      setPost((prev) => ({
+            ...prev,
+            picture: resData.imgUrl,
+        }));
     };
     getImage();
-    post.categories = location.search?.split("=")[1] || "All";
-    post.username = account.username;
+    
   }, [file]);
+
+  useEffect(() => {
+    // sessionStorage.setItem('username', accountDetails.username)
+    setPost((prev) => ({
+        ...prev,
+        categories: location.search?.split("=")[1] || "All",
+        username: accountDetails.username,
+        
+    }));
+}, [location.search, accountDetails.username]);
 
   const handleFilechange=(e)=>{
     setFile(e.target.files[0])
   }
   const handleChange = (e) => {
-    setPost({ ...post, [e.target.name]: e.target.value });
+    setPost((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const savePost=async()=>{
+    const token = getAccessToken();
+    const payload = {
+      title: post.title?.trim(),
+      description: post.description?.trim(),
+      picture: post.picture || "",
+      username: accountDetails.username,
+      categories: location.search?.split("=")[1] || "All",
+    };
+
     const response= await fetch(`${BASE_URL}/create`,{
       method:"POST",
       headers: {
-        authorization: getAccessToken()
+        "Content-Type": "application/json",
+        Authorization: `${token}`
       },
-      body: post
+      body: JSON.stringify(payload)
     })
     const data = await response.json();
     if(response.ok){
       navigate('/')
     }else{
-
+      console.error("Create post failed:", data);
     }
   }
   return (
