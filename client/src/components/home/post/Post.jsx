@@ -1,6 +1,7 @@
 import { Box, Typography, styled, Button } from "@mui/material";
 import React from "react";
 import { addElipsis } from "../../../utils/common-utils";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled(Box)`
   border: 1px solid #d3cede;
@@ -66,7 +67,8 @@ const Desc = styled(Typography)`
 const ButtonStyle = styled(Button)`
   margin: auto 10px 10px;
 `;
-const Post = ({ post }) => {
+const Post = ({ post, id }) => {
+    const navigate= useNavigate()
   return (
     <>
       <Container>
@@ -85,7 +87,8 @@ const Post = ({ post }) => {
           <Cat>{post.categories}</Cat>
           <Desc>{addElipsis(post.description, 50)}</Desc>
         </SubContainer>
-        <ButtonStyle variant="contained" >
+
+        <ButtonStyle variant="contained" onClick={()=> navigate(`/details/${id}`)}>
           Open
         </ButtonStyle>
       </Container>

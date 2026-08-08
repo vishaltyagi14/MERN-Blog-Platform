@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAccessToken, getPostsUrl } from "../../../utils/common-utils";
 import Post from "./Post";
 import { Box, Grid } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const Posts = () => {
   const BASE_URL = import.meta.env.VITE_API_URL;
@@ -16,16 +16,13 @@ const Posts = () => {
     const fetchData = async () => {
       const url = getPostsUrl(BASE_URL, categories, query);
 
-      const response = await fetch(
-       url,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${token}`,
-          },
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
         },
-      );
+      });
 
       const data = await response.json();
       if (response.ok) {
@@ -41,7 +38,7 @@ const Posts = () => {
         <Grid container spacing={2}>
           {post.map((item) => (
             <Grid key={item._id} size={{ xs: 12, sm: 4, lg: 3 }}>
-              <Post post={item} />
+              <Post post={item} id={item._id} />
             </Grid>
           ))}
         </Grid>
