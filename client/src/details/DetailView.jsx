@@ -79,6 +79,7 @@ const Title = styled(Typography)`
   line-height: 1.15;
   color: #1f2937;
   margin-bottom: 20px;
+  word-break: break-word;
 
   @media (max-width: 768px) {
     font-size: 34px;
@@ -156,6 +157,7 @@ const Description = styled(Typography)`
   color: #444;
   margin-top: 30px;
   white-space: pre-line;
+  word-break: break-word;
 
   @media (max-width: 600px) {
     font-size: 16px;
