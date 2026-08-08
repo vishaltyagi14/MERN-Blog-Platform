@@ -32,8 +32,19 @@ export const getAllPosts = async (req, res) => {
         }
         return res.status(200).json(posts)
     } catch (error) {
-        return response.status(500).json({
+        return res.status(500).json({
             msg: error.message
         })
     }
-}
+} 
+
+export const getPost=async(req,res)=>{
+    try {
+        const data= await Post.findById(req.params.id);
+        return res.status(200).json(data)
+    }catch (error) {
+        return res.status(500).json({
+            msg: error.message
+        })
+    }
+} 

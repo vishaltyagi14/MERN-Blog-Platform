@@ -1,29 +1,30 @@
 import mongoose from "mongoose";
 
-const postSchema=mongoose.Schema({
-    title:{
+const postSchema = mongoose.Schema({
+    title: {
         type: String,
         required: true
     },
-    description:{
+    description: {
         type: String,
         required: true
     },
-    picture:{
+    picture: {
         type: String,
-        
+
     },
-    username:{
-        type: String,
-        required: true
-    },
-    categories:{
+    username: {
         type: String,
         required: true
     },
-    createdAt:{
+    categories: {
+        type: String,
+        required: true
+    },
+    createdAt: {
         type: Date,
+        default: Date.now
     }
 })
-const Post= mongoose.model("Post",postSchema)
+const Post = mongoose.model("Post", postSchema)
 export default Post;

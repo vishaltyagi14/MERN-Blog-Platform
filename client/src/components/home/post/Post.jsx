@@ -2,98 +2,100 @@ import { Box, Typography, styled, Button } from "@mui/material";
 import React from "react";
 import { addElipsis } from "../../../utils/common-utils";
 import { useNavigate } from "react-router-dom";
-
 const Container = styled(Box)`
-  border: 1px solid #d3cede;
-  border-radius: 10px;
+  border: 1px solid #e1e4e8;
+  border-radius: 14px;
   margin: 10px;
-  height: 350px;
+  height: 360px;
   overflow: hidden;
   box-sizing: border-box;
-  max-width: 100%;
-
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: #d0d5db;
+  }
+`;
+const Image = styled("img")`
+  width: 100%;
+  height: 165px;
+  object-fit: cover;
+  display: block;
+`;
+const Content = styled(Box)`
+  padding: 10px 14px 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
 `;
-const Image = styled("img")({
-  width: "100%",
-  borderRadius: "10px 10px 0 0",
-  objectFit: "cover",
-  height: 150,
-});
 const Cat = styled(Typography)`
-  margin: 8px 0;
+  margin-bottom: 7px;
   width: fit-content;
-  height: 24px;
-  padding: 0 10px;
-  border-radius: 15px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  line-height: 24px;
-  background-color: #b6b4b4;
-  color: #4f4f4f;
-
+  padding: 4px 11px;
+  border-radius: 20px;
+  background-color: #eef2ff;
+  color: #4f46e5;
   font-family: "Inter", sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
 `;
-
 const Heading = styled(Typography)`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #222;
   margin-bottom: 4px;
 `;
-
 const SubHeading = styled(Typography)`
   font-size: 12px;
-  color: #878787;
+  color: #888;
+  margin-bottom: 8px;
 `;
-
-const SubContainer = styled(Box)`
-  margin: 10px;
-  max-width: 100%;
-  box-sizing: border-box;
-`;
-
 const Desc = styled(Typography)`
-  font-size: 14px;
-  color: #444;
-  line-height: 1.5;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.55;
   overflow-wrap: anywhere;
 `;
 const ButtonStyle = styled(Button)`
-  margin: auto 10px 10px;
+  margin: auto 14px 14px;
+  border-radius: 8px;
+  text-transform: none;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 8px 16px;
 `;
 const Post = ({ post, id }) => {
-    const navigate= useNavigate()
+  const navigate = useNavigate();
+  const fallbackImage =
+    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80";
   return (
-    <>
-      <Container>
-        <Image
-          src={
-            post.picture
-              ? post.picture
-              : "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80"
-          }
-          alt="Blog Image"
-          title="picture"
-        />
-        <SubContainer>
-          <Heading>Title: {addElipsis(post.title, 15)}</Heading>
-          <SubHeading>By: {post.username}</SubHeading>
-          <Cat>{post.categories}</Cat>
-          <Desc>{addElipsis(post.description, 50)}</Desc>
-        </SubContainer>
-
-        <ButtonStyle variant="contained" onClick={()=> navigate(`/details/${id}`)}>
-          Open
-        </ButtonStyle>
-      </Container>
-    </>
+    <Container>
+      {" "}
+      {/* Blog Image */}{" "}
+      <Image src={post.picture || fallbackImage} alt="Blog" />{" "}
+      {/* Blog Content */}{" "}
+      <Content>
+        {" "}
+        {/* Category */} <Cat> {post.categories || "General"} </Cat>{" "}
+        {/* Title */} <Heading> {addElipsis(post.title, 45)} </Heading>{" "}
+        {/* Author */} <SubHeading> By {post.username} </SubHeading>{" "}
+        {/* Description */}{" "}
+        <Desc> {addElipsis(post.description, 100)} </Desc>{" "}
+      </Content>{" "}
+      {/* Open Button */}{" "}
+      <ButtonStyle
+        variant="contained"
+        onClick={() => navigate(`/details/${id}`)}
+      >
+        {" "}
+        Read More{" "}
+      </ButtonStyle>{" "}
+    </Container>
   );
 };
-
 export default Post;
