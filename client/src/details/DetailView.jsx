@@ -11,7 +11,7 @@ import {
 import React, { useState, useEffect, useContext } from "react";
 import { OnlyContext } from "../context/Context";
 
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import { getAccessToken } from "../utils/common-utils";
 
@@ -238,9 +238,11 @@ const DetailView = () => {
                 {accountDetails.username === post.username && (
                   <>
                     <Tooltip title="Edit Post">
-                      <EditButton onClick={() => console.log("Edit:", id)}>
-                        <EditIcon fontSize="small" />
-                      </EditButton>
+                      <Link to={`/update/${post._id}`}>
+                        <EditButton>
+                          <EditIcon fontSize="small" />
+                        </EditButton>
+                      </Link>
                     </Tooltip>
 
                     <Tooltip title="Delete Post">

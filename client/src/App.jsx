@@ -13,6 +13,7 @@ import {
 import Header from "./components/header/header";
 import CreatePost from "./components/create/CreatePost";
 import DetailView from "./details/DetailView";
+import Update from "./components/create/Update";
 
 const PrivateRoute = () => {
   const token = sessionStorage.getItem("accessToken");
@@ -43,6 +44,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/create" element={<CreatePost />} />
               <Route path="/details/:id" element={<DetailView />} />
+              <Route path="/update/:id" element={<Update />} />
             </Route>
           </Routes>
         </BrowserRouter>
