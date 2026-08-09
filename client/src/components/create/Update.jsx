@@ -139,7 +139,7 @@ const Update = () => {
     };
 
     const response= await fetch(`${BASE_URL}/update/${id}`,{
-      method:"PUT ",
+      method:"PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `${token}`

@@ -11,7 +11,7 @@ import {
 import React, { useState, useEffect, useContext } from "react";
 import { OnlyContext } from "../context/Context";
 
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 import { getAccessToken } from "../utils/common-utils";
 
@@ -175,6 +175,7 @@ const DetailView = () => {
 
   const fallbackImage =
     "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixlib=rb-1.2.1&w=1000&q=80";
+    const {navigate} = useNavigate()
 
   useEffect(() => {
     const token = getAccessToken();
@@ -202,6 +203,12 @@ const DetailView = () => {
     fetchData();
   }, [id]);
 
+  const deleteBlog =async()=>{
+    let response= await fetch(`${BASE_URL}/delete/${id}`)
+    if(response.ok){
+      navigate('/')
+    }
+  }
   return (
     <Page>
       <Container>
@@ -246,7 +253,7 @@ const DetailView = () => {
                     </Tooltip>
 
                     <Tooltip title="Delete Post">
-                      <DeleteButton onClick={() => console.log("Delete:", id)}>
+                      <DeleteButton onClick={() => deleteBlog()}>
                         <DeleteIcon fontSize="small" />
                       </DeleteButton>
                     </Tooltip>
