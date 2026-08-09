@@ -17,6 +17,7 @@ import { getAccessToken } from "../utils/common-utils";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Type } from "lucide-react";
 
 const Page = styled(Box)`
   background: #f8f9fa;
@@ -203,8 +204,15 @@ const DetailView = () => {
     fetchData();
   }, [id]);
 
+  const token = getAccessToken();
   const deleteBlog =async()=>{
-    let response= await fetch(`${BASE_URL}/delete/${id}`)
+    let response= await fetch(`${BASE_URL}/delete/${id}`,{
+      method: 'DELETE',
+      headers:{
+        Authorization: `${token}`,
+        "Content-Type": 'application/json'
+      }
+    })
     if(response.ok){
       navigate('/')
     }

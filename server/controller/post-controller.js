@@ -56,7 +56,17 @@ export const updatePost = async (req, res) => {
             return res.status(404).json({ msg: "Post not Found" })
         }
         await Post.findByIdAndUpdate(req.params.id, { $set: req.body })
-         return res.status(200).json({msg: "Post Updated SuccessFully"})
+        return res.status(200).json({ msg: "Post Updated SuccessFully" })
+    } catch (error) {
+        return res.status(500).json({
+            msg: error.message
+        })
+    }
+}
+
+export const deletePost = async (req, res) => {
+    try {
+
     } catch (error) {
         return res.status(500).json({
             msg: error.message
