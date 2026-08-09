@@ -176,7 +176,7 @@ const DetailView = () => {
 
   const fallbackImage =
     "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixlib=rb-1.2.1&w=1000&q=80";
-    const {navigate} = useNavigate()
+    const navigate = useNavigate()
 
   useEffect(() => {
     const token = getAccessToken();
@@ -205,18 +205,30 @@ const DetailView = () => {
   }, [id]);
 
   const token = getAccessToken();
-  const deleteBlog =async()=>{
-    let response= await fetch(`${BASE_URL}/delete/${id}`,{
-      method: 'DELETE',
-      headers:{
-        Authorization: `${token}`,
-        "Content-Type": 'application/json'
-      }
-    })
-    if(response.ok){
-      navigate('/')
+  const deleteBlog = async () => {
+    try {
+        const token = getAccessToken();
+
+        const response = await fetch(`${BASE_URL}/delete/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            navigate("/");
+        } else {
+            console.error("Delete failed:", data);
+        }
+
+    } catch (error) {
+        console.error("Error deleting post:", error);
     }
-  }
+};
   return (
     <Page>
       <Container>
