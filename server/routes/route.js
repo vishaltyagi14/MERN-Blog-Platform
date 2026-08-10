@@ -14,6 +14,7 @@ router.get('/posts',authenticateToken,getAllPosts)
 router.get('/post/:id',authenticateToken,getPost)
 router.put('/update/:id',authenticateToken,updatePost)
 router.delete('/delete/:id',authenticateToken,deletePost)
+router.post('/addComment/new',authenticateToken,newComment)
 
 
 export default router

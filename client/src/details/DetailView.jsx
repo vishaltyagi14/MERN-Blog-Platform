@@ -18,6 +18,7 @@ import { getAccessToken } from "../utils/common-utils";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Type } from "lucide-react";
+import Comments from "./comments/comments";
 
 const Page = styled(Box)`
   background: #f8f9fa;
@@ -287,6 +288,7 @@ const DetailView = () => {
             {/* Blog Content */}
 
             <Description>{post.description}</Description>
+            <Comments post={post}/>
           </Content>
         </Article>
       </Container>
