@@ -31,7 +31,6 @@ const initial = {
   name: "",
   postId: "",
   comments: "",
-  date: new Date(),
 };
 
 const Comments = ({ post }) => {
@@ -48,6 +47,7 @@ const Comments = ({ post }) => {
       postId: post._id,
       comments: e.target.value,
     });
+    
   };
   const postComment = async () => {
     const response = await fetch(`${BASE_URL}/addComment/new`, {
@@ -56,6 +56,7 @@ const Comments = ({ post }) => {
         Authorization: `${token}`,
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(comment),
     });
     if(response.ok){
         setComment(initial)
