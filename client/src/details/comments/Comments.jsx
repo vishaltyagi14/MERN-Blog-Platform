@@ -1,8 +1,8 @@
-
 import { Box, Button, styled, TextareaAutosize } from "@mui/material";
 import React, { useState, useContext, useEffect } from "react";
 import { OnlyContext } from "../../context/Context";
 import { getAccessToken } from "../../utils/common-utils";
+import DisplayComments from "./displayComments";
 
 const Container = styled(Box)`
   margin-top: 100px;
@@ -42,8 +42,7 @@ const Comments = ({ post }) => {
   const { accountDetails } = useContext(OnlyContext);
   const token = getAccessToken();
 
-  const url =
-    "https://static.thenounproject.com/png/12017-200.png";
+  const url = "https://static.thenounproject.com/png/12017-200.png";
 
   const handleChange = (e) => {
     setComment({
@@ -54,21 +53,25 @@ const Comments = ({ post }) => {
     });
   };
 
-  // Get all comments of this post
   const getAllComments = async () => {
     try {
-      const cmnt = await fetch(
-        `${BASE_URL}/comments?postId=${post._id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        }
-      );
+      console.log("getAllComments called");
+      console.log("Post ID:", post?._id);
+      console.log("URL:", `${BASE_URL}/comments?postId=${post?._id}`);
+
+      const cmnt = await fetch(`${BASE_URL}/comments?postId=${post?._id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
+
+      console.log("Status:", cmnt.status);
 
       const data = await cmnt.json();
+
+      console.log("Comments:", data);
 
       if (cmnt.ok) {
         setCmntData(data);
@@ -77,7 +80,6 @@ const Comments = ({ post }) => {
       console.log("Error fetching comments:", error);
     }
   };
-
   // Post comment
   const postComment = async () => {
     try {
@@ -130,12 +132,11 @@ const Comments = ({ post }) => {
       {/* For Displaying Comments */}
 
       <Box>
-        {cmntData.map((item) => (
-          <Box key={item._id}>
-            <strong>{item.name}</strong>
-            <p>{item.comments}</p>
-          </Box>
-        ))}
+        {cmntData.length > 0 ? (
+          cmntData.map((com) => <DisplayComments key={com._id} com={com} getAll={getAllComments} />)
+        ) : (
+          <p className="text-center mt-10 text-gray-500">No comments yet</p>
+        )}
       </Box>
     </>
   );

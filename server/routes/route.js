@@ -4,7 +4,7 @@ import {uploadImage} from "../controller/image-controller.js"
 import { createPost,getAllPosts,getPost,updatePost,deletePost} from "../controller/post-controller.js"
 import {upload} from '../utils/upload.js'
 import { authenticateToken } from "../controller/jwt-controller.js"
-import {newComment,getComments} from "../controller/comment-controller.js"
+import {newComment,getComments,deleteComment} from "../controller/comment-controller.js"
 const router = express.Router()
 
 router.post("/signup",signupUser)
@@ -17,6 +17,7 @@ router.put('/update/:id',authenticateToken,updatePost)
 router.delete('/delete/:id',authenticateToken,deletePost)
 router.post('/addComment/new',authenticateToken,newComment)
 router.get('/comments',authenticateToken,getComments)
+router.delete('/deletecomment/:id',authenticateToken,deleteComment)
 
 
 export default router
