@@ -13,7 +13,7 @@ const DisplayComments = ({ com, getAllComments }) => {
   const token= getAccessToken()
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/deletcomment/${com._id}`, {
+      const response = await fetch(`${BASE_URL}/deletecomment/${com._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -133,7 +133,7 @@ const Comments = ({ post }) => {
 
       <Box>
         {cmntData.length > 0 ? (
-          cmntData.map((com) => <DisplayComments key={com._id} com={com} getAll={getAllComments} />)
+          cmntData.map((com) => <DisplayComments key={com._id} com={com} getAllComments={getAllComments} />)
         ) : (
           <p className="text-center mt-10 text-gray-500">No comments yet</p>
         )}
